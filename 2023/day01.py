@@ -25,21 +25,12 @@ for code in input:
 
     last = ""
     last_ind = -1
+    code_reversed = "".join(reversed(code))
     for val in valid:
-        all_indices = []
-        temp = code
-        erased = 0
-        # Find all copies of a value in the code (part 2)
-        while temp:
-            index = temp.find(val)
-            if index == -1:
-                break
-            all_indices.append(index + len(val) - 1 + erased)
-            temp = temp[index + len(val):]
-            erased += index + len(val)
-        if not all_indices:
+        reversed_val = "".join(reversed(val))
+        index = code_reversed.find(reversed_val) + len(val)
+        if index == -1:
             continue
-        index = max(all_indices)
         if index > last_ind:
             last_ind = index
             if val in process:
