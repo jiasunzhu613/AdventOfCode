@@ -1,4 +1,4 @@
-file = open("input.txt", "r")
+file = open("../input.txt", "r")
 input = [i.strip() for i in file.readlines()]
 
 tot = 0
