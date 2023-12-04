@@ -36,6 +36,7 @@ def solve(card_ind):
     if count_winning == 0: # base case
         return 1
     tot = 1
+    # Add all cards found 
     for i in range(card_ind + 1, card_ind + count_winning + 1):
         tot += solve(i)
     if card_ind not in memo:
