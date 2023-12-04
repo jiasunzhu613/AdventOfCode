@@ -26,14 +26,15 @@ print(part1)
 ### PART 2 ###
 memo = {}
 def solve(card_ind):
+    # If card has been processed already: just output how many cards was previously found for that case
+    if card_ind in memo:
+        return memo[card_ind]
     count_winning = 0
     for card in cards[card_ind][1]:
         if card in cards[card_ind][0]:
             count_winning += 1
     if count_winning == 0: # base case
         return 1
-    if card_ind in memo:
-        return memo[card_ind]
     tot = 1
     for i in range(card_ind + 1, card_ind + count_winning + 1):
         tot += solve(i)
