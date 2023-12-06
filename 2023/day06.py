@@ -52,6 +52,11 @@ if discrim >= 0:
 
 print(part2_tot)
 
+"""
+WOW... 
+What a change from day 5, kinda thankful tho lol after the disastrous day 5
+"""
+
 
 
 
