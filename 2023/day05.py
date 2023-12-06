@@ -20,7 +20,7 @@ for i in range(1, len(input)):
     temp_map.append(vals)
 maps.append(temp_map)
 
-
+# PART 1
 part1 = float("INF")
 for seed in seeds:
     curr = seed
@@ -34,12 +34,16 @@ for seed in seeds:
         part1 = curr
 print(part1)
 
+# PART 2
 # implementation idea for part 2, start form lowest final location value and check if a value works!
 def part2():
-    lo = 0
-    hi = 10**10
+    LO = 0
+    HI = 10**10
     change = False
     for i in range(1000):
+        # KEY TAKEAWAY:
+        # - Observing that we could work backwards from an ending location value to an initial seed value
+        # - changing direction of binary search manually (although it is scuffed)
         def helper(loo, hii, switch):
             lo = loo
             hi = hii
@@ -61,11 +65,12 @@ def part2():
                     else:
                         lo = location + 1
             return -1
-        ret = helper(lo, hi, change)
+        # CHANGE DIRECTION OF BINARY SEARCH
+        ret = helper(LO, HI, change)
         if ret == -1:
             change = not change
         else:
-            hi = ret
-    return hi
+            HI = ret
+    return HI
 
 print(part2())
