@@ -25,6 +25,11 @@ mappingPart2 = {}
 for i in range(len(strengthPart2)):
     mappingPart2[strengthPart2[i]] = i
 
+
+# https://stackoverflow.com/questions/5213033/sort-a-list-of-lists-with-a-custom-compare-function
+# Return negative value when left item should be sorted BEFORE right item
+# Return positive value when left item shuold be sorted AFTER right item
+# Return 0 if the two items are of equal value
 def compare(item1, item2):
     # PART 1
     # for i in range(len(item1)):
