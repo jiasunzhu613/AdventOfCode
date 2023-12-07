@@ -3,6 +3,7 @@ file = open("../input.txt", "r")
 input = [i.strip() for i in file.readlines()]
 
 """
+Hand types:
 Five of a kind, where all five cards have the same label: AAAAA
 Four of a kind, where four cards have the same label and one card has a different label: AA8AA
 Full house, where three cards have the same label, and the remaining two cards share a different label: 23332
@@ -12,11 +13,13 @@ One pair, where two cards share one label, and the other three cards have a diff
 High card, where all cards' labels are distinct: 23456
 """
 
+# Strength mapping for compare function in part 1
 strength = "A, K, Q, J, T, 9, 8, 7, 6, 5, 4, 3, 2".split(", ")
 mapping = {}
 for i in range(len(strength)):
     mapping[strength[i]] = i
 
+# Strength mapping for compare function in part 2
 strengthPart2 = "A, K, Q, T, 9, 8, 7, 6, 5, 4, 3, 2, J".split(", ")
 mappingPart2 = {}
 for i in range(len(strengthPart2)):
@@ -62,15 +65,10 @@ for card in bids:
         freq[ele] += 1
 
     J = freq["J"] if "J" in freq else 0
-    used = False
-    triples = 0
-    pairs = 0
-    processed = False
     values = []
     for ele in freq:
         if ele == "J":
             continue
-
         values.append(freq[ele])
     if not values:
         values.append(0)
@@ -82,6 +80,9 @@ for card in bids:
         J -= min(J, needed)
         ind += 1
 
+    triples = 0
+    pairs = 0
+    processed = False
     for val in values:
         if val == 5:
             five.append(card)
