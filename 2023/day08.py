@@ -7,7 +7,7 @@ network = {}
 
 endingA = []
 for node in nodes:
-    eles = list(re.findall("[A-Z]+", node))
+    eles = list(re.findall("\w+", node))
     if eles[0][-1] == "A":
         endingA.append(eles[0])
     dest = (eles[1], eles[2])
