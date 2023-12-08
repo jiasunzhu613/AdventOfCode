@@ -30,11 +30,12 @@ def get_count(val):
 # Find all steps needed for each element
 count_needed = [get_count(ele) for ele in endingA]
 
-def lcm(a, b):
-    return (a * b) // math.gcd(a, b)
+# REMEMBER!! THERE IS BUILT IN LCM IN MATH MODULE!!!!
+# def lcm(a, b):
+#     return (a * b) // math.gcd(a, b)
 
 # Find lowest common multiple of all the step counts for each node that was processed!
 total_steps = count_needed[0]
 for i in range(1, len(count_needed)):
-    total_steps = lcm(total_steps, count_needed[i])
+    total_steps = math.lcm(total_steps, count_needed[i])
 print(total_steps)
