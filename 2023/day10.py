@@ -220,3 +220,14 @@ for r in range(len(grid)):
             part2 += 1
 
 print(part2)
+
+"""
+Key Takeaways:
+- thinking of ways to check if a node is outside or inside the main loop
+- Changing the current grid which has 0-width corridors (hard to utilize in computation)
+to an expanded resolution grid where each cell is 3 times as big as before
+- Using bfs to check if a node can reach (0, 0) as a way of knowing whether or not the node
+is stuck in the main loop 
+- (since we know the main loop is a **closed off** looping shape, 
+if something can exit it, we know it is not in the loop)
+"""
