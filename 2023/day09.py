@@ -23,7 +23,7 @@ for history in histories:
     for i in range(len(start_values) - 2, -1, -1):
         start_values[i] -= start_values[i + 1]
     part2 += start_values[0]
-    
+
 print(part1)
 print(part2)
 
