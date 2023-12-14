@@ -1,5 +1,5 @@
 from collections import deque
-file = open("../input.txt", "r")
+file = open("Inputs/day10.txt", "r")
 grid = [i.strip() for i in file.readlines()]
 
 

@@ -1,4 +1,4 @@
-file = open("../input.txt", "r")
+file = open("Inputs/day5.txt", "r")
 input = [i.strip() for i in file.readlines()]
 # store different maps in array
 seeds = list(map(int, input[0].split(": ")[1].split()))

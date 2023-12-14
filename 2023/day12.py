@@ -1,6 +1,6 @@
 import re
 
-file = open("../input.txt", "r")
+file = open("Inputs/day12.txt", "r")
 input = [i.strip().split() for i in file.readlines()]
 
 springs = []
@@ -45,9 +45,6 @@ def solvePart1():
                 queue.append((to_add - 1, string + "."))
                 added.add(string + ".")
                 # print(queue[-1])
-
-
-
 
             broken = False
             for j in range(len(string)):

@@ -1,5 +1,5 @@
 import re, math
-file = open("../input.txt", "r")
+file = open("Inputs/day8.txt", "r")
 instructions, temp = [i.strip() for i in file.read().split("\n\n")]
 
 nodes = [i.strip() for i in temp.split("\n")]

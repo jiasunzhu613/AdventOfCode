@@ -1,4 +1,4 @@
-file = open("../input.txt", "r")
+file = open("Inputs/day3.txt", "r")
 input = [i.strip() for i in file.readlines()]
 
 dr = [-1, -1, -1, 0, 1, 1, 1, 0]

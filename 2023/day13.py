@@ -1,4 +1,4 @@
-file = open("../input.txt", "r")
+file = open("Inputs/day13.txt", "r")
 input = [i.strip() for i in file.read().split("\n\n")]
 
 grids = []

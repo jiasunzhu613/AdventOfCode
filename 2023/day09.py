@@ -1,4 +1,4 @@
-file = open("../input.txt", "r")
+file = open("Inputs/day9.txt", "r")
 histories = [list(map(int, i.strip().split())) for i in file.readlines()]
 
 part1 = 0

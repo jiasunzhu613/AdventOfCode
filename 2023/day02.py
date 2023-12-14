@@ -1,4 +1,4 @@
-file = open("../input.txt", "r")
+file = open("Inputs/day2.txt", "r")
 input = [i.strip().split(":") for i in file.readlines()] # add 1 to each index later
 
 
