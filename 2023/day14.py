@@ -1,5 +1,3 @@
-from copy import copy, deepcopy
-
 file = open("../input.txt", "r")
 grid = [list(i.strip()) for i in file.readlines()]
 
