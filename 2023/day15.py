@@ -1,4 +1,4 @@
-file = open("../input.txt", "r")
+file = open("Inputs/day15.txt", "r")
 queries = file.read().strip().split(",")
 
 MULT = 17
