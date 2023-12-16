@@ -26,6 +26,11 @@ def backward_slant(dr, dc):
     return [(dc, dr)]
 
 def solve(start, dir):
+    # MAIN TAKEAWAY: Recognizing that we can track visited based on the direction each node comes from
+    # - We dont need to follow a new node that has been visited by a previous node with the same directional matrices
+    # as it will lead down to the same path
+    # - If we store direction matrices in our visited array, we can keep track of which directions has visited each node
+    # and which unique paths have not been processed
     seen = [[[] for i in range(W)] for j in range(H)]
     queue = []
     queue.append((start[0], start[1], dir[0], dir[1]))
