@@ -5,6 +5,7 @@ commands = [i.strip() for i in file.readlines()]
 def find_determinant(x1, x2, y1, y2):
     return (x1*y2) - (y1*x2)
 
+# Main takeaways: Using shoelace theorem to find the area of polygons, https://en.wikipedia.org/wiki/Shoelace_formula
 # have -1 intially for first node that wont be counted through code
 # areas are -1 because we are doing shoelace theorem in the clockwise direction!
 part1 = -1
