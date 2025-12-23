@@ -27,8 +27,8 @@ type JunctionBoxDistance struct {
 }
 
 type UnionFind struct {
-	id   []int
-	size []int
+	id         []int
+	size       []int
 	components int
 }
 
@@ -95,12 +95,12 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	
+
 	lines := strings.Split(string(file), "\n")
 
 	unionFind := NewUnionFind(len(lines))
 
-	// Calculate distances from each node to the other 
+	// Calculate distances from each node to the other
 	coordinates := make([]Coordinate, 0)
 	for _, line := range lines {
 		x, y, z := processLine(line)
@@ -115,7 +115,7 @@ func main() {
 		}
 	}
 
-	sort.Slice(distances, func (i, j int) bool {
+	sort.Slice(distances, func(i, j int) bool {
 		return distances[i].distance < distances[j].distance
 	})
 
@@ -123,7 +123,6 @@ func main() {
 		junctionBox := distances[i]
 		unify(*unionFind, junctionBox.from, junctionBox.to)
 	}
-
 
 	sizeCopy := make([]int, len((*unionFind).size))
 	copy(sizeCopy, (*unionFind).size)
@@ -138,7 +137,6 @@ func main() {
 	_, xProduct := connnectedAll(distances, coordinates, *unionFind)
 	fmt.Println("Product of x of last two connected junction boxes:", xProduct)
 }
-
 
 func processLine(line string) (int, int, int) {
 	splitted := strings.Split(line, ",")
@@ -155,7 +153,7 @@ func distance3D(c1, c2 Coordinate) float64 {
 	yDiff := c1.y - c2.y
 	zDiff := c1.z - c2.z
 
-	squareSum := float64(xDiff * xDiff + yDiff * yDiff + zDiff * zDiff)
+	squareSum := float64(xDiff*xDiff + yDiff*yDiff + zDiff*zDiff)
 	return math.Sqrt(squareSum)
 }
 

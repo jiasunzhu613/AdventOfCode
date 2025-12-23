@@ -60,7 +60,7 @@ func convertRanges(productIdRange string) (int, int) {
 
 func isDoubled(id string) bool {
 	// Odd lengthed strings can never be doubled
-	if len(id) & 1 == 1 {
+	if len(id)&1 == 1 {
 		return false
 	}
 
@@ -72,14 +72,14 @@ func isRepeated(id string) bool {
 	mid := len(id) / 2
 	for i := 1; i <= mid; i++ {
 		// If the current subsection we are testing for repeatability is not divisible, then ignore!
-		if len(id) % i != 0 {
+		if len(id)%i != 0 {
 			continue
 		}
 
 		segment := id[:i]
 		works := true
 		for j := i; j < len(id); j += i {
-			if id[j: j + i] != segment {
+			if id[j:j+i] != segment {
 				works = false
 				break
 			}

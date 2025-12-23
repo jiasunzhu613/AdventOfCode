@@ -11,7 +11,7 @@ import (
 
 type Range struct {
 	start int
-	stop int
+	stop  int
 }
 
 func main() {
@@ -22,7 +22,7 @@ func main() {
 
 	// Get both parts of the input first
 	sections := strings.Split(string(file), "\n\n")
-	
+
 	// Process Ranges
 	inputRanges := strings.Split(sections[0], "\n")
 	ranges := make([]Range, len(inputRanges))
@@ -46,7 +46,7 @@ func main() {
 	}
 
 	fmt.Println("Total number of possible fresh ingredients:", totalPossibleFresh)
-	
+
 	// Process values
 	total := 0
 	for _, s := range strings.Split(sections[1], "\n") {
@@ -59,18 +59,18 @@ func main() {
 func findCumulativeDisjointRanges(ranges []Range) []Range {
 	// Sort ranges slice
 	sort.Slice(ranges, func(i, j int) bool {
-		return ranges[i].start < ranges[j].start 
+		return ranges[i].start < ranges[j].start
 	})
 
 	fmt.Println(ranges)
-	
+
 	// We will store every disjoin range as a pair of values, corresponded by index
 	// start[i] => stop[i], so on
 	disjointRanges := make([]Range, 1)
-	
+
 	// for each range, it is either the start of a new disjoint range or it continue from the previous one
 	for _, _range := range ranges {
-		lastRange := disjointRanges[len(disjointRanges) - 1]
+		lastRange := disjointRanges[len(disjointRanges)-1]
 		lastStart, lastStop := lastRange.start, lastRange.stop
 
 		if lastStart <= _range.start && _range.stop <= lastStop {
@@ -79,14 +79,14 @@ func findCumulativeDisjointRanges(ranges []Range) []Range {
 
 		// case 1: it joins previous range
 		if lastStart <= _range.start && _range.start <= lastStop && lastStop <= _range.stop {
-			disjointRanges[len(disjointRanges) - 1].stop = _range.stop
+			disjointRanges[len(disjointRanges)-1].stop = _range.stop
 		} else {
 			disjointRanges = append(disjointRanges, _range)
 		}
 	}
-	
+
 	return disjointRanges[1:]
-} 
+}
 
 func checkSpoiled(ranges []Range, value int) int {
 	for _, _range := range ranges {

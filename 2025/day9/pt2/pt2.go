@@ -18,7 +18,7 @@ type Coordinate struct {
 	y int
 }
 
-type Pair[T comparable] struct { a, b T }
+type Pair[T comparable] struct{ a, b T }
 
 type Set[T comparable] struct {
 	m map[T]struct{}
@@ -27,7 +27,7 @@ type Set[T comparable] struct {
 // Make new set with input values if any (uses variadics)
 // Empty struct uses 0 memory
 func newSet[T comparable](items ...T) *Set[T] {
-	s := &Set[T] {
+	s := &Set[T]{
 		m: make(map[T]struct{}),
 	}
 
@@ -49,7 +49,7 @@ func addItem[T comparable](set *Set[T], item T) {
 	set.m[item] = struct{}{}
 }
 
-func in[T comparable](set *Set[T], item T) bool{
+func in[T comparable](set *Set[T], item T) bool {
 	_, ok := set.m[item]
 
 	return ok
@@ -63,9 +63,9 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	
+
 	lines := strings.Split(string(file), "\n")
-	
+
 	coordinates := make([]Coordinate, 0)
 	xCoordinates := make([]int, 0)
 	xSet := newSet[int]()
@@ -74,7 +74,7 @@ func main() {
 	for _, line := range lines {
 		x, y := processLine(line)
 		coordinates = append(coordinates, Coordinate{x, y})
-		
+
 		if !in(xSet, x) {
 			xCoordinates = append(xCoordinates, x)
 			addItem(xSet, x)
@@ -85,7 +85,6 @@ func main() {
 			addItem(ySet, y)
 		}
 	}
-
 
 	sort.Ints(xCoordinates)
 	sort.Ints(yCoordinates)
@@ -100,9 +99,9 @@ func main() {
 	yWeights := make([]int, 0)
 
 	// START: Create coordinate compression mapping for x
-	for i := 0; i < len(xCoordinates) - 1; i++ {
+	for i := 0; i < len(xCoordinates)-1; i++ {
 		_, ok := xMapping[xCoordinates[i]]
-		
+
 		if ok {
 			continue
 		}
@@ -111,14 +110,14 @@ func main() {
 		xMapping[xCoordinates[i]] = xCompression
 
 		// Increment compression counter
-		diff := xCoordinates[i + 1] - xCoordinates[i]
+		diff := xCoordinates[i+1] - xCoordinates[i]
 		if diff >= 2 {
 			xCompression += 2
 		} else {
 			xCompression++
 		}
 	}
-	xMapping[xCoordinates[len(xCoordinates) - 1]] = xCompression
+	xMapping[xCoordinates[len(xCoordinates)-1]] = xCompression
 	// END: Create coordinate compression mapping for x
 
 	// START: Add weights for x
@@ -126,7 +125,7 @@ func main() {
 	xWeights = append(xWeights, 1)
 	for i := 1; i < len(xCoordinates); i++ {
 		// Increment compression counter
-		diff := xCoordinates[i] - xCoordinates[i - 1]
+		diff := xCoordinates[i] - xCoordinates[i-1]
 		if diff >= 2 {
 			xWeights = append(xWeights, diff)
 			xWeights = append(xWeights, 1)
@@ -136,9 +135,9 @@ func main() {
 	}
 	// END: add weights for x
 
-	for i := 0; i < len(yCoordinates) - 1; i++ {
+	for i := 0; i < len(yCoordinates)-1; i++ {
 		_, ok := yMapping[yCoordinates[i]]
-		
+
 		if ok {
 			continue
 		}
@@ -147,21 +146,21 @@ func main() {
 		yMapping[yCoordinates[i]] = yCompression
 
 		// Increment compression counter
-		diff := yCoordinates[i + 1] - yCoordinates[i]
+		diff := yCoordinates[i+1] - yCoordinates[i]
 		if diff >= 2 {
 			yCompression += 2
 		} else {
 			yCompression++
 		}
 	}
-	yMapping[yCoordinates[len(yCoordinates) - 1]] = yCompression
+	yMapping[yCoordinates[len(yCoordinates)-1]] = yCompression
 
 	// START: Add weights for y
 	yWeights = append(yWeights, yCoordinates[0])
 	yWeights = append(yWeights, 1)
 	for i := 1; i < len(yCoordinates); i++ {
 		// Increment compression counter
-		diff := yCoordinates[i] - yCoordinates[i - 1]
+		diff := yCoordinates[i] - yCoordinates[i-1]
 		if diff >= 2 {
 			yWeights = append(yWeights, diff)
 			yWeights = append(yWeights, 1)
@@ -181,7 +180,7 @@ func main() {
 
 	// Find all edges in compressed grid
 	for i := 0; i < len(compressedCoordinates); i++ {
-		prevI := mod(i - 1, len(compressedCoordinates))
+		prevI := mod(i-1, len(compressedCoordinates))
 
 		x, y := compressedCoordinates[i].x, compressedCoordinates[i].y
 		xx, yy := compressedCoordinates[prevI].x, compressedCoordinates[prevI].y
@@ -191,7 +190,7 @@ func main() {
 			for i := min(y, yy); i <= max(y, yy); i++ {
 				addItem(edges, Coordinate{x, i})
 			}
-		} else { // on same y axis 
+		} else { // on same y axis
 			for i := min(x, xx); i <= max(x, xx); i++ {
 				addItem(edges, Coordinate{i, y})
 			}
@@ -202,7 +201,7 @@ func main() {
 	// (0, 0) should never be a filled slot, so we start here
 
 	// Build raw grid for flood fill marking
-	X, Y := xCompression + 1, yCompression + 1
+	X, Y := xCompression+1, yCompression+1
 	grid := make([][]int, Y)
 	for i := 0; i < len(grid); i++ {
 		grid[i] = make([]int, X)
@@ -240,12 +239,12 @@ func processLine(line string) (int, int) {
 }
 
 func getArea(c1, c2 Coordinate) int {
-	return int((math.Abs(float64(c1.x - c2.x)) + 1) * (math.Abs(float64(c1.y - c2.y)) + 1))
+	return int((math.Abs(float64(c1.x-c2.x)) + 1) * (math.Abs(float64(c1.y-c2.y)) + 1))
 }
 
 func findValidCoordinatePairs(coordinates []Coordinate, table [][]int) []Pair[int] {
 	pairs := make([]Pair[int], 0)
-	
+
 	for i := 0; i < len(coordinates); i++ {
 		for j := i + 1; j < len(coordinates); j++ {
 			query := QueryTable(table, coordinates[i], coordinates[j])
@@ -259,13 +258,13 @@ func findValidCoordinatePairs(coordinates []Coordinate, table [][]int) []Pair[in
 }
 
 func QueryTable(table [][]int, c1, c2 Coordinate) int {
-	// This function does not cover edge cases because they will 
+	// This function does not cover edge cases because they will
 	// not happen with AOC input but beware of using this function on all cases
 	boundMin := Coordinate{min(c1.x, c2.x) - 1, min(c1.y, c2.y) - 1}
 	boundMax := Coordinate{max(c1.x, c2.x), max(c1.y, c2.y)}
-	
-	return table[boundMin.y][boundMin.x] + table[boundMax.y][boundMax.x] - 
-			(table[boundMin.y][boundMax.x] + table[boundMax.y][boundMin.x])
+
+	return table[boundMin.y][boundMin.x] + table[boundMax.y][boundMax.x] -
+		(table[boundMin.y][boundMax.x] + table[boundMax.y][boundMin.x])
 }
 
 func naiveFindLargestRectangle(coordinates []Coordinate, pairs []Pair[int]) int {
@@ -294,12 +293,12 @@ func FloodFill(edges *Set[Coordinate], grid *[][]int, visited *Set[Coordinate], 
 	if ok {
 		return
 	}
-	
+
 	_, ok2 := edges.m[curr]
 	if ok2 {
 		return
 	}
-	
+
 	addItem(visited, curr)
 
 	(*grid)[curr.y][curr.x] = 1
@@ -317,8 +316,8 @@ func GenerateSumTable(grid [][]int) [][]int {
 
 	for i := 0; i < len(table); i++ {
 		for j := 0; j < len(table[0]); j++ {
-			table[i][j] = grid[i][j] + SafeRetrieve(table, i, j - 1) + 
-							SafeRetrieve(table, i - 1, j) - SafeRetrieve(table, i - 1, j - 1)
+			table[i][j] = grid[i][j] + SafeRetrieve(table, i, j-1) +
+				SafeRetrieve(table, i-1, j) - SafeRetrieve(table, i-1, j-1)
 		}
 	}
 
@@ -332,5 +331,3 @@ func SafeRetrieve(grid [][]int, r, c int) int {
 
 	return grid[r][c]
 }
-
-

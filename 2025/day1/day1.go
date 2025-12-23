@@ -9,7 +9,7 @@ import (
 )
 
 func main() {
-	content, err := os.ReadFile("../input/day1.txt") 
+	content, err := os.ReadFile("../input/day1.txt")
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -18,7 +18,7 @@ func main() {
 	dial := 50
 	pt1 := 0
 	pt2 := 0
-	
+
 	for _, line := range input {
 		amount, _ := strconv.Atoi(string(line[1:]))
 		dial = turnDial(dial, &pt1, &pt2, string(line[0]), amount)
@@ -36,9 +36,9 @@ func turnDial(curr int, pt1 *int, pt2 *int, direction string, amount int) int {
 		amount *= -1
 	}
 
-	if curr != 0 && 
-		(min(curr, curr + amount) <= 0  && 0 <= max(curr, curr + amount)) || 
-		(min(curr, curr + amount) <= 100  && 100 <= max(curr, curr + amount)) {
+	if curr != 0 &&
+		(min(curr, curr+amount) <= 0 && 0 <= max(curr, curr+amount)) ||
+		(min(curr, curr+amount) <= 100 && 100 <= max(curr, curr+amount)) {
 		*pt2++
 	}
 	curr += amount
@@ -51,5 +51,5 @@ func turnDial(curr int, pt1 *int, pt2 *int, direction string, amount int) int {
 }
 
 func mod(a int, b int) int {
-	return (a % b + b) % b
+	return (a%b + b) % b
 }

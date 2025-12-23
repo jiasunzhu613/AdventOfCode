@@ -17,8 +17,8 @@ type Coordinate struct {
 
 type Rectangle struct {
 	area int
-	c1 Coordinate // it is in no way guaranteed that c1 is top left and c2 is bottom right
-	c2 Coordinate
+	c1   Coordinate // it is in no way guaranteed that c1 is top left and c2 is bottom right
+	c2   Coordinate
 }
 
 func main() {
@@ -26,9 +26,9 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	
+
 	lines := strings.Split(string(file), "\n")
-	
+
 	coordinates := make([]Coordinate, 0)
 	for _, line := range lines {
 		x, y := processLine(line)
@@ -37,7 +37,7 @@ func main() {
 
 	// PT 1
 	rectangles := naiveFindLargestRectangle(coordinates)
-	sort.Slice(rectangles, func (i, j int) bool {
+	sort.Slice(rectangles, func(i, j int) bool {
 		return rectangles[i].area > rectangles[j].area
 	})
 
@@ -66,5 +66,5 @@ func naiveFindLargestRectangle(coordinates []Coordinate) []Rectangle {
 }
 
 func getArea(c1, c2 Coordinate) int {
-	return int((math.Abs(float64(c1.x - c2.x)) + 1) * (math.Abs(float64(c1.y - c2.y)) + 1))
+	return int((math.Abs(float64(c1.x-c2.x)) + 1) * (math.Abs(float64(c1.y-c2.y)) + 1))
 }

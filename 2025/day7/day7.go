@@ -19,7 +19,7 @@ type Set[T comparable] struct {
 // Make new set with input values if any (uses variadics)
 // Empty struct uses 0 memory
 func newSet[T comparable](items ...T) *Set[T] {
-	s := &Set[T] {
+	s := &Set[T]{
 		m: make(map[T]struct{}),
 	}
 
@@ -37,7 +37,7 @@ func main() {
 	}
 
 	lines := strings.Split(string(file), "\n")
-	
+
 	seen := newSet[Coordinate]()
 	memoTimelines := make(map[Coordinate]int)
 
@@ -46,12 +46,11 @@ func main() {
 	fmt.Println("Total number of beam splits:", splits)
 
 	fmt.Println()
-	
+
 	fmt.Println("=======TIMELINES NOW=======")
 	timelines := countTimelines(lines, memoTimelines, 0, strings.Index(lines[0], "S"))
 	fmt.Println("Total number of timelines:", timelines)
 }
-
 
 func countSplits(lines []string, seen *Set[Coordinate], r int, c int) int {
 	if r >= len(lines) || c < 0 || c >= len(lines[0]) {
@@ -66,8 +65,8 @@ func countSplits(lines []string, seen *Set[Coordinate], r int, c int) int {
 				return 0
 			}
 			seen.m[Coordinate{row: r, col: c}] = struct{}{}
-			
-			return 1 + countSplits(lines, seen, r, c - 1) + countSplits(lines, seen, r, c + 1)
+
+			return 1 + countSplits(lines, seen, r, c-1) + countSplits(lines, seen, r, c+1)
 		}
 	}
 
@@ -89,9 +88,9 @@ func countTimelines(lines []string, memo map[Coordinate]int, r int, c int) int {
 				return value
 			}
 
-			result := countTimelines(lines, memo, r, c - 1) + countTimelines(lines, memo, r, c + 1)
+			result := countTimelines(lines, memo, r, c-1) + countTimelines(lines, memo, r, c+1)
 			memo[Coordinate{row: r, col: c}] = result
-			
+
 			return result
 		}
 	}

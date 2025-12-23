@@ -16,9 +16,9 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	
+
 	grid := strings.Split(string(file), "\n")
-	
+
 	// Use 2D rune slice instead for 2D value assignment
 	grid2 := make([][]rune, len(grid))
 	for index, line := range grid {
@@ -27,8 +27,8 @@ func main() {
 
 	liftable := 0
 	new, new_grid := naiveCheck(grid2)
-	for ; new != 0; {
-		liftable += new 
+	for new != 0 {
+		liftable += new
 
 		if *ptFlag == 1 {
 			break
@@ -40,7 +40,6 @@ func main() {
 		new, new_grid = naiveCheck(grid2)
 	}
 
-
 	fmt.Println("Amount of liftable rolls:", liftable)
 }
 
@@ -50,7 +49,7 @@ func naiveCheck(grid [][]rune) (int, [][]rune) {
 	dc := []int{1, -1, 0, 1, -1, 0, 1, -1}
 
 	liftable := 0
-	
+
 	for i, line := range grid {
 		for j, c := range line {
 			if c != '@' {
@@ -65,7 +64,7 @@ func naiveCheck(grid [][]rune) (int, [][]rune) {
 					continue
 				}
 
-				if grid[ii][jj] == '@' ||  grid[ii][jj] == 'x'{
+				if grid[ii][jj] == '@' || grid[ii][jj] == 'x' {
 					count++
 				}
 			}

@@ -32,13 +32,13 @@ func main() {
 		if *ptFlag == 1 {
 			values = normalProcessValues(lines, c)
 		} else {
-			lengthToNext := findLengthToNext(rawLines[len(rawLines) - 1], startCounter)
-			values = cephalopodProcessValues(rawLines, startCounter, startCounter + lengthToNext - 1)
+			lengthToNext := findLengthToNext(rawLines[len(rawLines)-1], startCounter)
+			values = cephalopodProcessValues(rawLines, startCounter, startCounter+lengthToNext-1)
 			startCounter += lengthToNext
 		}
-		
+
 		fmt.Println(values)
-		operator := lines[len(lines) - 1][c] 
+		operator := lines[len(lines)-1][c]
 		switch operator {
 		case "*":
 			total += product(values)
@@ -70,11 +70,11 @@ func sum(arr []int) int {
 	}
 
 	return result
-} 
+}
 
 func normalProcessValues(lines [][]string, c int) []int {
 	values := make([]int, 0)
-	for r := 0; r < len(lines) - 1; r++ {
+	for r := 0; r < len(lines)-1; r++ {
 		value, _ := strconv.Atoi(lines[r][c])
 		values = append(values, value)
 	}
@@ -86,14 +86,14 @@ func findLengthToNext(lastLine string, start int) int {
 	count := 1
 	start++
 
-	for ;lastLine[start] == ' '; {
+	for lastLine[start] == ' ' {
 		count++
 		start++
 		if start == len(lastLine) {
 			break
 		}
 	}
-	
+
 	if start == len(lastLine) {
 		count++
 	}
@@ -103,15 +103,15 @@ func findLengthToNext(lastLine string, start int) int {
 
 func cephalopodProcessValues(lines []string, start int, end int) []int {
 	cephalopod := make([]int, 0)
-	for i := 0; i < end - start; i++ {
+	for i := 0; i < end-start; i++ {
 		value := 0
-		for r := 0; r < len(lines) - 1; r++ {
+		for r := 0; r < len(lines)-1; r++ {
 			// Modify new value
-			if lines[r][start + i] == ' ' {
+			if lines[r][start+i] == ' ' {
 				continue
 			}
 
-			v := lines[r][start + i] - '0'
+			v := lines[r][start+i] - '0'
 			if v != 0 {
 				value *= 10
 			}
@@ -123,4 +123,3 @@ func cephalopodProcessValues(lines []string, start int, end int) []int {
 
 	return cephalopod
 }
-
