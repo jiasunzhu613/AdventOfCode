@@ -8,6 +8,9 @@ import (
 	"strings"
 )
 
+// NP-complete problem LOL
+// https://en.wikipedia.org/wiki/Bin_packing_problem
+
 const (
 	EPISLON = 10 // Make a reasonable assumption for epsilon
 )
