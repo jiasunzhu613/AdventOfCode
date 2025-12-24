@@ -57,7 +57,6 @@ func FindAllPaths(target, curr string, visited map[string]int, adjMap map[string
 	return result
 }
 
-// dac is on bit 0 and fft is on bit 1
 func FindAllPathsWithAttractions(adjMap map[string][]string) int {
 	// We will take a kinda stupid approach of just doing math and having terrible memory complexity
 	allPaths := make(map[string]int)
