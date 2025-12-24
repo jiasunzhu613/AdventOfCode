@@ -165,17 +165,15 @@ func GetLeastButtonPressesJoltage(joltages, buttonsInBaseTwo []int, buttons [][]
 		return BIG_NUMBER
 	}
 
-	// Start: Recursive
 	leastJoltage := BIG_NUMBER
 	for _, pattern := range patterns {
-		// check parity between option and joltages
+		// Check parity between option and joltages
 		if !sameParity(pattern.cost, joltages) {
 			continue
 		}
 
 		copiedJoltage := make([]int, len(joltages))
 		copy(copiedJoltage, joltages)
-		// fmt.Println("copied:", copiedJoltage)
 
 		for ind, val := range pattern.cost {
 			copiedJoltage[ind] -= val
@@ -195,11 +193,12 @@ func GetLeastButtonPressesJoltage(joltages, buttonsInBaseTwo []int, buttons [][]
 		leastJoltage = min(leastJoltage, clicks)
 	}
 	
-	// add to memo
+	// Add to memo
 	memo[arrayToString(joltages)] = leastJoltage
 	return leastJoltage
 }
 
+// Util functions for Part 2
 func arrayToString(arr []int) string {
 	return strings.Join(strings.Fields(fmt.Sprint(arr)), ",")
 }
