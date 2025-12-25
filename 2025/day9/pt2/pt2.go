@@ -11,6 +11,8 @@ import (
 	"sort"
 	"strconv"
 	"strings"
+
+	. "github.com/jiasunzhu613/AdventOfCode/utils"
 )
 
 type Coordinate struct {
@@ -20,40 +22,6 @@ type Coordinate struct {
 
 type Pair[T comparable] struct{ a, b T }
 
-type Set[T comparable] struct {
-	m map[T]struct{}
-}
-
-// Make new set with input values if any (uses variadics)
-// Empty struct uses 0 memory
-func newSet[T comparable](items ...T) *Set[T] {
-	s := &Set[T]{
-		m: make(map[T]struct{}),
-	}
-
-	for _, item := range items {
-		s.m[item] = struct{}{} // second set of braces is for construction of the empty struct
-	}
-
-	return s
-}
-
-func addItem[T comparable](set *Set[T], item T) {
-	_, ok := set.m[item]
-
-	// If already in set, we dont care anymore
-	if ok {
-		return
-	}
-
-	set.m[item] = struct{}{}
-}
-
-func in[T comparable](set *Set[T], item T) bool {
-	_, ok := set.m[item]
-
-	return ok
-}
 
 // in order for the rectangle to be valid, there should not be any red cells within the rectangle
 // there can be red cells on the corner or border but not within the rectangle
@@ -68,21 +36,21 @@ func main() {
 
 	coordinates := make([]Coordinate, 0)
 	xCoordinates := make([]int, 0)
-	xSet := newSet[int]()
+	xSet := NewSet[int]()
 	yCoordinates := make([]int, 0)
-	ySet := newSet[int]()
+	ySet := NewSet[int]()
 	for _, line := range lines {
 		x, y := processLine(line)
 		coordinates = append(coordinates, Coordinate{x, y})
 
-		if !in(xSet, x) {
+		if !In(xSet, x) {
 			xCoordinates = append(xCoordinates, x)
-			addItem(xSet, x)
+			AddItem(xSet, x)
 		}
 
-		if !in(ySet, y) {
+		if !In(ySet, y) {
 			yCoordinates = append(yCoordinates, y)
-			addItem(ySet, y)
+			AddItem(ySet, y)
 		}
 	}
 
@@ -176,7 +144,7 @@ func main() {
 		compressedCoordinates = append(compressedCoordinates, Coordinate{xMapping[x], yMapping[y]})
 	}
 
-	edges := newSet[Coordinate]()
+	edges := NewSet[Coordinate]()
 
 	// Find all edges in compressed grid
 	for i := 0; i < len(compressedCoordinates); i++ {
@@ -188,11 +156,11 @@ func main() {
 		// on same x axis
 		if x == xx {
 			for i := min(y, yy); i <= max(y, yy); i++ {
-				addItem(edges, Coordinate{x, i})
+				AddItem(edges, Coordinate{x, i})
 			}
 		} else { // on same y axis
 			for i := min(x, xx); i <= max(x, xx); i++ {
-				addItem(edges, Coordinate{i, y})
+				AddItem(edges, Coordinate{i, y})
 			}
 		}
 	}
@@ -209,10 +177,10 @@ func main() {
 
 	dx := []int{0, 1, -1, 0}
 	dy := []int{1, 0, 0, -1}
-	FloodFill(edges, &grid, newSet[Coordinate](), dx, dy, X, Y, Coordinate{0, 0})
-	FloodFill(edges, &grid, newSet[Coordinate](), dx, dy, X, Y, Coordinate{X - 1, 0})
-	FloodFill(edges, &grid, newSet[Coordinate](), dx, dy, X, Y, Coordinate{0, Y - 1})
-	FloodFill(edges, &grid, newSet[Coordinate](), dx, dy, X, Y, Coordinate{X - 1, Y - 1})
+	FloodFill(edges, &grid, NewSet[Coordinate](), dx, dy, X, Y, Coordinate{0, 0})
+	FloodFill(edges, &grid, NewSet[Coordinate](), dx, dy, X, Y, Coordinate{X - 1, 0})
+	FloodFill(edges, &grid, NewSet[Coordinate](), dx, dy, X, Y, Coordinate{0, Y - 1})
+	FloodFill(edges, &grid, NewSet[Coordinate](), dx, dy, X, Y, Coordinate{X - 1, Y - 1})
 
 	// DEBUGGING
 	// for _, line := range grid {
@@ -289,17 +257,15 @@ func FloodFill(edges *Set[Coordinate], grid *[][]int, visited *Set[Coordinate], 
 		return
 	}
 
-	_, ok := visited.m[curr]
-	if ok {
+	if In(visited, curr) {
 		return
 	}
 
-	_, ok2 := edges.m[curr]
-	if ok2 {
+	if In(edges, curr) {
 		return
 	}
 
-	addItem(visited, curr)
+	AddItem(visited, curr)
 
 	(*grid)[curr.y][curr.x] = 1
 

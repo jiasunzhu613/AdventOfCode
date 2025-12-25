@@ -6,7 +6,7 @@ type Set[T comparable] struct {
 
 // Make new set with input values if any (uses variadics)
 // Empty struct uses 0 memory
-func newSet[T comparable](items ...T) *Set[T] {
+func NewSet[T comparable](items ...T) *Set[T] {
 	s := &Set[T]{
 		m: make(map[T]struct{}),
 	}
@@ -18,7 +18,7 @@ func newSet[T comparable](items ...T) *Set[T] {
 	return s
 }
 
-func addItem[T comparable](set *Set[T], item T) {
+func AddItem[T comparable](set *Set[T], item T) {
 	_, ok := set.m[item]
 
 	// If already in set, we dont care anymore
@@ -29,7 +29,7 @@ func addItem[T comparable](set *Set[T], item T) {
 	set.m[item] = struct{}{}
 }
 
-func in[T comparable](set *Set[T], item T) bool {
+func In[T comparable](set *Set[T], item T) bool {
 	_, ok := set.m[item]
 
 	return ok

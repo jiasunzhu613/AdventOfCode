@@ -5,29 +5,13 @@ import (
 	"log"
 	"os"
 	"strings"
+
+	. "github.com/jiasunzhu613/AdventOfCode/utils"
 )
 
 type Coordinate struct {
 	row int
 	col int
-}
-
-type Set[T comparable] struct {
-	m map[T]struct{}
-}
-
-// Make new set with input values if any (uses variadics)
-// Empty struct uses 0 memory
-func newSet[T comparable](items ...T) *Set[T] {
-	s := &Set[T]{
-		m: make(map[T]struct{}),
-	}
-
-	for _, item := range items {
-		s.m[item] = struct{}{} // second set of braces is for construction of the empty struct
-	}
-
-	return s
 }
 
 func main() {
@@ -38,7 +22,7 @@ func main() {
 
 	lines := strings.Split(string(file), "\n")
 
-	seen := newSet[Coordinate]()
+	seen := NewSet[Coordinate]()
 	memoTimelines := make(map[Coordinate]int)
 
 	fmt.Println("=======SPLITS NOW=======")
@@ -60,11 +44,11 @@ func countSplits(lines []string, seen *Set[Coordinate], r int, c int) int {
 	for ; r < len(lines); r++ {
 		if lines[r][c] == '^' {
 			// We specifically want to memoize the coordinates where we split
-			_, ok := seen.m[Coordinate{row: r, col: c}]
-			if ok {
+			if In(seen, Coordinate{row: r, col: c}) {
 				return 0
 			}
-			seen.m[Coordinate{row: r, col: c}] = struct{}{}
+
+			AddItem(seen, Coordinate{row: r, col: c})
 
 			return 1 + countSplits(lines, seen, r, c-1) + countSplits(lines, seen, r, c+1)
 		}
